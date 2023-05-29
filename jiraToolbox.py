@@ -40,7 +40,10 @@ class JiraAPI(object):
 								
 								)
 			#print (response.text)
-			if response.status_code != 200:
+			
+			print (inspect.stack()[0][3],'http status code received:', response.status_code)
+			
+			if response.status_code not in [200,201,202]:
 				print(inspect.stack()[0][3]+': the module received a HTTP STATUS error code. Request was >', httpMethod, url, 'check the payload and url. Details:',response.text )
 				raise Exception
 			
@@ -48,7 +51,7 @@ class JiraAPI(object):
 				return(response).text
 		except:
 			print(inspect.stack()[0][3]+': exception while executing the function!')			
-
+			
 	def deleteIssue(self, issueId):
 		try:
 			url = self.atlassianHost+'/rest/api/2/issue/'+issueId		
